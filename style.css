@@ -239,9 +239,18 @@ img {
 }
 
 .footer__content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.footer__col {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.footer__col p {
+  margin: 0;
 }
 
 .footer a {
@@ -443,6 +452,12 @@ img {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .benefits-grid .benefit:nth-child(5) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: min(100%, 520px);
+  }
+
   .about-grid {
     grid-template-columns: 1fr 1fr;
   }
@@ -452,8 +467,7 @@ img {
   }
 
   .footer__content {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    align-items: start;
   }
 }
