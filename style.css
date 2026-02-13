@@ -1,4 +1,4 @@
-﻿:root {
+:root {
   --blue-dark: #0a1f44;
   --blue-mid: #123a7a;
   --blue-vibrant: #1f5eff;
@@ -562,20 +562,50 @@ img {
 
 @media (max-width: 639px) {
   .video-carousel {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
+  }
+
+  .video-viewport {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .video-track {
+    gap: 0.7rem;
   }
 
   .video-card {
     flex-basis: 100%;
+    padding: 0.5rem;
+  }
+
+  .video-card video {
+    border-radius: 10px;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
   }
 
   .carousel-arrow {
-    width: 40px;
-    height: 40px;
+    display: none;
   }
 
-  .carousel-arrow--left,
-  .carousel-arrow--right {
-    justify-self: center;
+  .footer__content {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .footer__col {
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .footer__bottom {
+    justify-content: center;
   }
 }
+
+
+

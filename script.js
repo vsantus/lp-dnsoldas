@@ -1,4 +1,4 @@
-﻿const observer = new IntersectionObserver(
+const observer = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
@@ -22,7 +22,7 @@ faqButtons.forEach((button) => {
     const item = button.closest(".faq-item");
     const isOpen = item.classList.contains("active");
 
-    // Mantem somente um item aberto por vez para reduzir ruído visual.
+    // Mantem somente um item aberto por vez para reduzir ru�do visual.
     document.querySelectorAll(".faq-item").forEach((faqItem) => {
       faqItem.classList.remove("active");
       faqItem.querySelector(".faq-question").setAttribute("aria-expanded", "false");
@@ -50,6 +50,8 @@ document.querySelectorAll("[data-carousel]").forEach((carousel) => {
   if (!track || cards.length === 0 || !prevButton || !nextButton) return;
 
   let currentIndex = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
 
   const updateCarousel = () => {
     const visibleItems = getCarouselVisibleItems();
@@ -58,6 +60,7 @@ document.querySelectorAll("[data-carousel]").forEach((carousel) => {
     const cardWidth = cards[0].offsetWidth;
 
     if (currentIndex > maxIndex) currentIndex = maxIndex;
+    if (currentIndex < 0) currentIndex = 0;
 
     track.style.transform = `translateX(-${currentIndex * (cardWidth + gap)}px)`;
     prevButton.disabled = currentIndex === 0;
@@ -74,6 +77,39 @@ document.querySelectorAll("[data-carousel]").forEach((carousel) => {
     updateCarousel();
   });
 
+  track.addEventListener(
+    "touchstart",
+    (event) => {
+      const firstTouch = event.touches[0];
+      touchStartX = firstTouch.clientX;
+      touchStartY = firstTouch.clientY;
+    },
+    { passive: true }
+  );
+
+  track.addEventListener(
+    "touchend",
+    (event) => {
+      const firstTouch = event.changedTouches[0];
+      const deltaX = firstTouch.clientX - touchStartX;
+      const deltaY = firstTouch.clientY - touchStartY;
+      const swipeThreshold = 40;
+
+      if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
+      if (Math.abs(deltaX) < swipeThreshold) return;
+
+      if (deltaX < 0) {
+        currentIndex += 1;
+      } else {
+        currentIndex -= 1;
+      }
+
+      updateCarousel();
+    },
+    { passive: true }
+  );
+
   window.addEventListener("resize", updateCarousel);
   updateCarousel();
 });
+
