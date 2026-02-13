@@ -69,10 +69,18 @@ img {
 }
 
 .logo {
+  display: inline-flex;
+  align-items: center;
   color: var(--white);
   font-weight: 800;
   text-decoration: none;
   letter-spacing: 0.4px;
+}
+
+.logo img {
+  display: block;
+  height: 44px;
+  width: auto;
 }
 
 .nav {
@@ -170,6 +178,59 @@ img {
   margin-top: 0;
 }
 
+.video-carousel {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.9rem;
+  align-items: center;
+}
+
+.video-viewport {
+  overflow: hidden;
+}
+
+.video-track {
+  display: flex;
+  gap: 1rem;
+  transition: transform 0.35s ease;
+}
+
+.video-card {
+  flex: 0 0 calc((100% - 2rem) / 3);
+  padding: 0.7rem;
+}
+
+.video-card video {
+  width: 100%;
+  border-radius: 12px;
+  background: #000;
+}
+
+.carousel-arrow {
+  width: 25px;
+  height: 25px;
+  border-radius:100%;
+  border: 0;
+  background: var(--gray-dark);
+  color: var(--white);
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.carousel-arrow:hover {
+  transform: translateY(-2px);
+}
+
+.carousel-arrow:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .faq {
   display: grid;
   gap: 0.7rem;
@@ -244,9 +305,21 @@ img {
   gap: 1rem;
 }
 
+.footer__bottom {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
 .footer__col {
   display: grid;
   gap: 0.35rem;
+  justify-content: start;
+}
+
+.footer__copy {
+  text-align: center;
+  justify-items: center;
 }
 
 .footer__col p {
@@ -344,7 +417,6 @@ img {
   animation: subtleScale 2.3s infinite;
 }
 
-/* Elementos observados entram com reveal quando .show for adicionada */
 .reveal,
 .reveal-left,
 .reveal-right,
@@ -467,7 +539,43 @@ img {
   }
 
   .footer__content {
-    grid-template-columns: repeat(3, minmax(220px, 1fr));
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
     align-items: start;
+  }
+
+  .footer__content > .footer__col:first-child {
+    justify-self: start;
+    text-align: left;
+  }
+
+  .footer__content > .footer__col:last-child {
+    justify-self: end;
+    text-align: right;
+  }
+}
+
+@media (max-width: 1023px) {
+  .video-card {
+    flex-basis: calc((100% - 1rem) / 2);
+  }
+}
+
+@media (max-width: 639px) {
+  .video-carousel {
+    grid-template-columns: 1fr;
+  }
+
+  .video-card {
+    flex-basis: 100%;
+  }
+
+  .carousel-arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .carousel-arrow--left,
+  .carousel-arrow--right {
+    justify-self: center;
   }
 }
